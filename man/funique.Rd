@@ -19,23 +19,21 @@ date-time and some list columns.
 }
 \examples{
 
-## create data set with date-time and list columns
+## create data set with date-time columns
 d <- datasets::mtcars
 d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
-d$list <- lapply(seq_len(nrow(d)), function(.) letters)
+
 ## create multiple data frames with duplicate rows
 d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
+
 ## merge into single data frame
 d <- do.call("rbind", d)
 
-##
+## speed test
 library(microbenchmark)
+(mn <- microbenchmark(unique(d), funique(d)))
 
-microbenchmark(
-  funique(d), unique(d)
-)
-
-funique(d) \%>\% nrow()
-unique(d) \%>\% nrow()
+## check output
+identical(unique(d), funique(d))
 
 }
