@@ -34,8 +34,6 @@ funique <- function(x) UseMethod("funique")
 #' @export
 funique.data.frame <- function(x) {
   psx <- vapply(x, inherits, "POSIXct", FUN.VALUE = logical(1), USE.NAMES = FALSE)
-  tzs <- vapply(x[psx], function(.)
-    format(na.omit(.)[1], "%Z"), FUN.VALUE = character(1), USE.NAMES = FALSE)
   p <- x[psx]
   x[psx] <- lapply(x[psx], as.integer)
   kp <- !duplicated(x)
