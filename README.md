@@ -3,7 +3,7 @@
 funique
 =======
 
-A faster `unique()` function
+⌚️ A faster `unique()` function
 
 Installation
 ------------
@@ -41,9 +41,9 @@ library(microbenchmark)
 ## benchmarks
 (mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
 #> Unit: relative
-#>        expr     min     lq    mean  median      uq     max neval
-#>   unique(d) 1.97461 2.1498 1.80149 2.12301 1.80284 1.19432   100
-#>  funique(d) 1.00000 1.0000 1.00000 1.00000 1.00000 1.00000   100
+#>        expr     min      lq    mean  median      uq     max neval
+#>   unique(d) 2.07169 2.24016 2.14428 2.20406 2.05754 2.44785   100
+#>  funique(d) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(d), funique(d))
@@ -53,7 +53,7 @@ identical(unique(d), funique(d))
 plot(mb)
 ```
 
-<img src="man/figures/README-ex1-1.png" width="100%" />
+![](man/figures/README-ex1-1.png)
 
 Here's another test this time using duplicate-infested Twitter data.
 
@@ -67,9 +67,9 @@ rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
 #> Unit: relative
-#>          expr     min      lq    mean  median      uq     max neval
-#>   unique(rt2) 1.72363 1.48729 1.51731 1.52661 1.51751 1.24783   100
-#>  funique(rt2) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
+#>          expr     min     lq    mean  median      uq     max neval
+#>   unique(rt2) 1.69278 1.5025 1.47479 1.53282 1.55658 1.11853   100
+#>  funique(rt2) 1.00000 1.0000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))
@@ -79,4 +79,4 @@ identical(unique(rt2), funique(rt2))
 plot(mb)
 ```
 
-<img src="man/figures/README-ex2-1.png" width="100%" />
+![](man/figures/README-ex2-1.png)
