@@ -76,7 +76,30 @@ There's one function `funique()`, which is the same as `base::unique()` only opt
 
 The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
 
-```{r ex1}
+```{r ex1, eval=FALSE}
+## create data set with a date-time column
+d <- datasets::mtcars
+d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
+
+## create multiple data frames with duplicate rows
+d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
+## merge into single data frame
+d <- do.call("rbind", d)
+
+## compare times between funique() and base::unique()
+library(microbenchmark)
+
+## benchmarks
+(mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
+
+## make sure the output is the same
+identical(unique(d), funique(d))
+
+## plot
+plot(mb)
+```
+
+```{r, include=FALSE}
 ## create data set with a date-time column
 d <- datasets::mtcars
 d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
@@ -97,12 +120,15 @@ identical(unique(d), funique(d))
 
 ## plot
 plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray")) + 
+  ggplot2::ggsave("man/figures/r1.png", width = 8, height = 6, units = "in")
 ```
+
+<p align="center"> <img src="man/figures/r1.png">
 
 Here's another test this time using duplicate-infested Twitter data.
 
-```{r ex2}
+```{r ex2, eval = FALSE}
 ## search for data on 1,000 tweets
 rt <- rtweet::search_tweets("lang:en", n = 500, verbose = FALSE)
 
@@ -116,7 +142,30 @@ rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
 identical(unique(rt2), funique(rt2))
 
 ## plot
-plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
+plot(mb)
 ```
 
+
+```{r, include=FALSE}
+## search for data on 1,000 tweets
+rt <- rtweet::search_tweets("lang:en", n = 500, verbose = FALSE)
+
+## create duplicates
+rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
+
+## benchmarks
+(mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
+
+## make sure the output is the same
+identical(unique(rt2), funique(rt2))
+
+## plot
+plot(mb)
+
+## plot
+plot(drop_hl(mb, n = 4)) + 
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray")) + 
+  ggplot2::ggsave("man/figures/r2.png", width = 8, height = 6, units = "in")
+```
+
+<p align="center"> <img src="man/figures/r2.png">

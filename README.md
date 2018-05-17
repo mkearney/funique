@@ -39,21 +39,17 @@ library(microbenchmark)
 
 ## benchmarks
 (mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
-#> Unit: relative
-#>        expr     min      lq    mean  median      uq     max neval
-#>   unique(d) 2.07079 2.08923 1.99051 2.01112 1.89312 1.64731   100
-#>  funique(d) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(d), funique(d))
-#> [1] TRUE
 
 ## plot
-plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
+plot(mb)
 ```
 
-![](man/figures/README-ex1-1.png)<!-- -->
+<p align="center">
+
+<img src="man/figures/r1.png">
 
 Here’s another test this time using duplicate-infested Twitter data.
 
@@ -66,18 +62,14 @@ rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
 
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
-#> Unit: relative
-#>          expr     min      lq    mean  median      uq     max neval
-#>   unique(rt2) 1.56258 1.65704 1.65022 1.59961 1.50223 2.68942   100
-#>  funique(rt2) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))
-#> [1] TRUE
 
 ## plot
-plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
+plot(mb)
 ```
 
-![](man/figures/README-ex2-1.png)<!-- -->
+<p align="center">
+
+<img src="man/figures/r2.png">
