@@ -1,12 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-funique
-=======
+
+# funique
 
 ⌚️ A faster `unique()` function
 
-Installation
-------------
+## Installation
 
 You can install the released version of funique from Github with:
 
@@ -15,15 +14,15 @@ You can install the released version of funique from Github with:
 devtools::install_github("mkearney/funique")
 ```
 
-Usage
------
+## Usage
 
-There's one function `funique()`, which is the same as `base::unique()` only optimized to be faster when data contain date-time variables.
+There’s one function `funique()`, which is the same as `base::unique()`
+only optimized to be faster when data contain date-time variables.
 
-Speed test: `funique()` vs. `base::unique()`
---------------------------------------------
+## Speed test: `funique()` vs. `base::unique()`
 
-The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
+The code below creates a data frame with several duplicate rows and then
+compares performance (in time) of `funique()` versus `base::unique()`.
 
 ``` r
 ## create data set with a date-time column
@@ -42,7 +41,7 @@ library(microbenchmark)
 (mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
 #> Unit: relative
 #>        expr     min      lq    mean  median      uq     max neval
-#>   unique(d) 2.07169 2.24016 2.14428 2.20406 2.05754 2.44785   100
+#>   unique(d) 2.07079 2.08923 1.99051 2.01112 1.89312 1.64731   100
 #>  funique(d) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
@@ -50,12 +49,13 @@ identical(unique(d), funique(d))
 #> [1] TRUE
 
 ## plot
-plot(mb)
+plot(drop_hl(mb, n = 4)) + 
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
 ```
 
-![](man/figures/README-ex1-1.png)
+![](man/figures/README-ex1-1.png)<!-- -->
 
-Here's another test this time using duplicate-infested Twitter data.
+Here’s another test this time using duplicate-infested Twitter data.
 
 ``` r
 ## search for data on 1,000 tweets
@@ -67,16 +67,17 @@ rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
 #> Unit: relative
-#>          expr     min     lq    mean  median      uq     max neval
-#>   unique(rt2) 1.69278 1.5025 1.47479 1.53282 1.55658 1.11853   100
-#>  funique(rt2) 1.00000 1.0000 1.00000 1.00000 1.00000 1.00000   100
+#>          expr     min      lq    mean  median      uq     max neval
+#>   unique(rt2) 1.56258 1.65704 1.65022 1.59961 1.50223 2.68942   100
+#>  funique(rt2) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))
 #> [1] TRUE
 
 ## plot
-plot(mb)
+plot(drop_hl(mb, n = 4)) + 
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
 ```
 
-![](man/figures/README-ex2-1.png)
+![](man/figures/README-ex2-1.png)<!-- -->

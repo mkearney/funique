@@ -10,6 +10,49 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-"
 )
+drop_hl <- function(x, n = 1) {
+  x <- tibble::as_tibble(x, validate = FALSE)
+  x <- dplyr::arrange(x, expr, time)
+  tot <- sum(x$expr == x$expr[1])
+  g <- length(unique(x$expr))
+  s <- (1 + n):(tot - n)
+  s <- unlist(Map("+", list(s), c(0, cumsum(rep(tot, g - 1)))))
+  structure(x[s, ], class = c("hlmb", "tbl_df", "tbl", "data.frame"))
+}
+
+plot.hlmb <- function(x) {
+  x$time <- x$time / 1000
+  min <- 0
+  max <- max(x$time, na.rm = TRUE) * 1.05
+  x$expr <- as.character(x$expr)
+  ggplot2::ggplot(x, ggplot2::aes(x = expr, y = time, fill = expr)) +
+    ggplot2::geom_boxplot(outlier.shape = NA, alpha = .6) +
+    ggplot2::geom_jitter(shape = 21, size = ggplot2::rel(3), alpha = .6) +
+    ggplot2::theme_minimal(base_size = 11, base_family = "Roboto Condensed") +
+    ggplot2::theme(legend.position = "none",
+      text = ggplot2::element_text(colour = "#444444"),
+      axis.title = ggplot2::element_text(size = ggplot2::rel(1.0),
+        hjust = 0.95, face = "italic", colour = "black"),
+      axis.text.x = ggplot2::element_text(size = ggplot2::rel(0.9),
+        colour = "black"),
+      axis.text.y = ggplot2::element_text(size = ggplot2::rel(1.1),
+        colour = "black", angle = 90, hjust = .5),
+      plot.title = ggplot2::element_text(size = ggplot2::rel(1.4),
+        colour = "black", face = "bold"),
+      plot.subtitle = ggplot2::element_text(size = ggplot2::rel(1.1),
+        colour = "black"),
+      plot.caption = ggplot2::element_text(hjust = 0, size = ggplot2::rel(.95)),
+      panel.grid.minor.x = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_line(linetype = "dashed"),
+      panel.grid.major.y = ggplot2::element_line(linetype = "dashed"),
+      axis.line.x = ggplot2::element_line(colour = "#44444422")) +
+    ggplot2::labs(y = "Time (microseconds)", x = "Expression",
+      title = "Benchmarking expression evaluation times",
+      subtitle = "Boxplots overlayed with jittered replication times",
+      caption = "Estimates from the {microbenchmark} pkg") +
+    ggplot2::scale_y_continuous(limits = c(min, max)) +
+    ggplot2::coord_flip()
+}
 library(funique)
 ```
 # funique
@@ -53,7 +96,8 @@ library(microbenchmark)
 identical(unique(d), funique(d))
 
 ## plot
-plot(mb)
+plot(drop_hl(mb, n = 4)) + 
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
 ```
 
 Here's another test this time using duplicate-infested Twitter data.
@@ -72,6 +116,7 @@ rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
 identical(unique(rt2), funique(rt2))
 
 ## plot
-plot(mb)
+plot(drop_hl(mb, n = 4)) + 
+  ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
 ```
 

@@ -36,11 +36,18 @@ funique.data.frame <- function(x) {
   psx <- vapply(x, inherits, "POSIXct", FUN.VALUE = logical(1), USE.NAMES = FALSE)
   p <- x[psx]
   x[psx] <- lapply(x[psx], as.integer)
-  kp <- !duplicated(x)
+  kp <- !fduplicated(x)
   x <- x[kp, ]
   x[psx] <- lapply(p, function(.) .[kp])
   x
 }
+
+fduplicated <- function(x) {
+  if (length(x) != 1L)
+    duplicated(do.call(Map, c(list, x)), fromLast = FALSE)
+  else duplicated(x[[1L]], fromLast = FALSE)
+}
+
 
 #' @export
 funique.default <- function(x) {
