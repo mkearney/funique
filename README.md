@@ -35,8 +35,11 @@ d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
 ## merge into single data frame
 d <- do.call("rbind", d)
 
+## compare times between funique() and base::unique()
+library(microbenchmark)
+
 ## benchmarks
-(mb <- microbenchmark::microbenchmark(unique(d), funique(d), unit = "relative"))
+(mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
 
 ## make sure the output is the same
 identical(unique(d), funique(d))
@@ -58,7 +61,7 @@ rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
-(mb <- microbenchmark::microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
+(mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))

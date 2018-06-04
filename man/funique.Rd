@@ -29,9 +29,8 @@ d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
 ## merge into single data frame
 d <- do.call("rbind", d)
 
-## speed test
-library(microbenchmark)
-(mn <- microbenchmark(unique(d), funique(d)))
+## get only unique rows
+funique(d)
 
 ## check output
 identical(unique(d), funique(d))
