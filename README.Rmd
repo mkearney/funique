@@ -129,11 +129,11 @@ plot(drop_hl(mb, n = 4)) +
 Here's another test this time using duplicate-infested Twitter data.
 
 ```{r ex2, eval = FALSE}
-## search for data on 1,000 tweets
-rt <- rtweet::search_tweets("lang:en", n = 500, verbose = FALSE)
+## search for data on 100 tweets
+rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 
 ## create duplicates
-rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
+rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
@@ -147,11 +147,11 @@ plot(mb)
 
 
 ```{r, include=FALSE}
-## search for data on 1,000 tweets
-rt <- rtweet::search_tweets("lang:en", n = 500, verbose = FALSE)
+## search for data on 100 tweets
+rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 
 ## create duplicates
-rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
+rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))

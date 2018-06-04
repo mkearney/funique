@@ -33,6 +33,12 @@ funique <- function(x) UseMethod("funique")
 
 #' @export
 funique.data.frame <- function(x) {
+  fc <- vapply(x, function(.) is.integer(.) | is.factor(.),
+    FUN.VALUE = logical(1), USE.NAMES = FALSE)
+  if (any(fc)) {
+    x <- x[!fduplicated(x[fc]), ]
+    x <- x[!fduplicated(x), ]
+  }
   psx <- vapply(x, inherits, "POSIXct", FUN.VALUE = logical(1), USE.NAMES = FALSE)
   p <- x[psx]
   x[psx] <- lapply(x[psx], as.integer)

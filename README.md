@@ -1,11 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# funique
+funique
+=======
 
 ⌚️ A faster `unique()` function
 
-## Installation
+Installation
+------------
 
 You can install the released version of funique from Github with:
 
@@ -14,15 +15,15 @@ You can install the released version of funique from Github with:
 devtools::install_github("mkearney/funique")
 ```
 
-## Usage
+Usage
+-----
 
-There’s one function `funique()`, which is the same as `base::unique()`
-only optimized to be faster when data contain date-time variables.
+There's one function `funique()`, which is the same as `base::unique()` only optimized to be faster when data contain date-time variables.
 
-## Speed test: `funique()` vs. `base::unique()`
+Speed test: `funique()` vs. `base::unique()`
+--------------------------------------------
 
-The code below creates a data frame with several duplicate rows and then
-compares performance (in time) of `funique()` versus `base::unique()`.
+The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
 
 ``` r
 ## create data set with a date-time column
@@ -48,17 +49,16 @@ plot(mb)
 ```
 
 <p align="center">
-
 <img src="man/figures/r1.png">
 
-Here’s another test this time using duplicate-infested Twitter data.
+Here's another test this time using duplicate-infested Twitter data.
 
 ``` r
-## search for data on 1,000 tweets
-rt <- rtweet::search_tweets("lang:en", n = 500, verbose = FALSE)
+## search for data on 100 tweets
+rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 
 ## create duplicates
-rt2 <- rbind(rt, rt[sample(1:nrow(rt), 100), ])
+rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
 (mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
@@ -71,5 +71,4 @@ plot(mb)
 ```
 
 <p align="center">
-
 <img src="man/figures/r2.png">
