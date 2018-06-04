@@ -2,12 +2,16 @@ Package: funique
 Version: 0.0.1
 Title: A Faster Unique Function
 Description: Similar to base's unique function, only optimized for working with 
-    date-time columns.
-author: person("Michael Wayne", "Kearney", ,
+    data frames, especially those that contain date-time columns.
+Authors@R: person("Michael Wayne", "Kearney", ,
     "kearneymw@missouri.edu", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0002-0730-4694"))
 Encoding: UTF-8
+Depends:
+    R (>= 3.1.0)
 LazyData: true
 ByteCompile: true
 RoxygenNote: 6.0.1.9000
 License: MIT + file LICENSE
+URL: https://github.com/mkearney/funique
+BugReports: https://github.com/mkearney/funique/issues
