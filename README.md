@@ -1,12 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-funique
-=======
+
+# funique <img src="man/figures/logo.png" width="160px" align="right" />
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 ⌚️ A faster `unique()` function
 
-Installation
-------------
+## Installation
 
 You can install the released version of funique from Github with:
 
@@ -15,15 +16,15 @@ You can install the released version of funique from Github with:
 devtools::install_github("mkearney/funique")
 ```
 
-Usage
------
+## Usage
 
-There's one function `funique()`, which is the same as `base::unique()` only optimized to be faster when data contain date-time variables.
+There’s one function `funique()`, which is the same as `base::unique()`
+only optimized to be faster when data contain date-time variables.
 
-Speed test: `funique()` vs. `base::unique()`
---------------------------------------------
+## Speed test: `funique()` vs. `base::unique()`
 
-The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
+The code below creates a data frame with several duplicate rows and then
+compares performance (in time) of `funique()` versus `base::unique()`.
 
 ``` r
 ## create data set with a date-time column
@@ -49,9 +50,10 @@ plot(mb)
 ```
 
 <p align="center">
+
 <img src="man/figures/r1.png">
 
-Here's another test this time using duplicate-infested Twitter data.
+Here’s another test this time using duplicate-infested Twitter data.
 
 ``` r
 ## search for data on 100 tweets
@@ -71,4 +73,5 @@ plot(mb)
 ```
 
 <p align="center">
+
 <img src="man/figures/r2.png">

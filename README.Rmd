@@ -55,7 +55,9 @@ plot.hlmb <- function(x) {
 }
 library(funique)
 ```
-# funique
+# funique <img src="man/figures/logo.png" width="160px" align="right" />
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 ⌚️ A faster `unique()` function
 
@@ -63,7 +65,7 @@ library(funique)
 
 You can install the released version of funique from Github with:
 
-``` r
+```{r, eval = FALSE}
 ## install from github
 devtools::install_github("mkearney/funique")
 ```
