@@ -1,8 +1,8 @@
 context("test-funique")
 
-test_that("multiplication works", {
+test_that("funique", {
   ## set seed
-  seed(20180812)
+  set.seed(20180812)
 
   ## generate data
   d <- data.frame(
@@ -18,11 +18,11 @@ test_that("multiplication works", {
   expect_true(nrow(funique(d)) == 1000)
 
   ## should be equal
-  expect_equal(unique(d), funique(d))
+  expect_true(identical(unique(d), funique(d)))
 
   ## try non-data frame
-  abc <- sample(letters, 100)
+  abc <- sample(letters, 100, replace = TRUE)
 
   ## should be equal
-  expect_equal(unique(abc), funique(abc))
+  expect_true(identical(unique(abc), funique(abc)))
 })
