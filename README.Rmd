@@ -87,7 +87,7 @@ There's one function `funique()`, which is the same as `base::unique()` only opt
 The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
 
 
-```{r ex1, fig.keep = "none"}
+```{r ex1, fig.keep = "none", eval = FALSE}
 ## set seed
 set.seed(20180812)
 
@@ -117,7 +117,7 @@ plot(drop_hl(m, n = 4)) +
 
 Here's another test this time using duplicate-infested Twitter data.
 
-```{r ex2, fig.keep = "none"}
+```{r ex2, fig.keep = "none", eval = FALSE}
 ## search for data on 100 tweets
 rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 
