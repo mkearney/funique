@@ -115,19 +115,14 @@
 <a class="sourceLine" id="cb2-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">## check the output against base::unique</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">identical</span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d))</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">## bench mark</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">(m &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d), </a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">  <span class="dt">times =</span> <span class="dv">200</span>, <span class="dt">unit =</span> <span class="st">"relative"</span>))</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; Unit: relative</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;        expr     min       lq     mean   median       uq      max neval</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;   unique(d) 5.02789 4.672499 4.575863 4.689152 5.399349 1.831048   200</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;  funique(d) 1.00000 1.000000 1.000000 1.000000 1.000000 1.000000   200</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">## plot</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="kw">plot</span>(<span class="kw">drop_hl</span>(m, <span class="dt">n =</span> <span class="dv">4</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsave">ggsave</a></span>(<span class="st">"man/figures/r1.png"</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="fl">4.5</span>, <span class="dt">units =</span> <span class="st">"in"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## bench mark</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">(m &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d), </a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">  <span class="dt">times =</span> <span class="dv">200</span>, <span class="dt">unit =</span> <span class="st">"relative"</span>))</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">## plot</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw">plot</span>(<span class="kw">drop_hl</span>(m, <span class="dt">n =</span> <span class="dv">4</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsave">ggsave</a></span>(<span class="st">"man/figures/r1.png"</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="fl">4.5</span>, <span class="dt">units =</span> <span class="st">"in"</span>)</a></code></pre></div>
 <p align="center">
 </p>
 <p><img src="reference/figures/r1.png"></p>
@@ -141,18 +136,13 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">## benchmarks</span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">(mb &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">unique</span>(rt2), <span class="kw"><a href="reference/funique.html">funique</a></span>(rt2), <span class="dt">unit =</span> <span class="st">"relative"</span>))</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; Unit: relative</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;          expr      min       lq     mean   median       uq      max neval</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;   unique(rt2) 1.681366 1.560745 1.492717 1.574353 1.540403 1.196466   100</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  funique(rt2) 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000   100</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">## make sure the output is the same</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="kw">identical</span>(<span class="kw">unique</span>(rt2), <span class="kw"><a href="reference/funique.html">funique</a></span>(rt2))</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">## plot</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="kw">plot</span>(<span class="kw">drop_hl</span>(m, <span class="dt">n =</span> <span class="dv">4</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsave">ggsave</a></span>(<span class="st">"man/figures/r2.png"</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="fl">4.5</span>, <span class="dt">units =</span> <span class="st">"in"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## make sure the output is the same</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="kw">identical</span>(<span class="kw">unique</span>(rt2), <span class="kw"><a href="reference/funique.html">funique</a></span>(rt2))</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">## plot</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw">plot</span>(<span class="kw">drop_hl</span>(mb, <span class="dt">n =</span> <span class="dv">4</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="st">  </span>ggplot2<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsave">ggsave</a></span>(<span class="st">"man/figures/r2.png"</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="fl">4.5</span>, <span class="dt">units =</span> <span class="st">"in"</span>)</a></code></pre></div>
 <p align="center">
 </p>
 <p><img src="reference/figures/r2.png"></p>
