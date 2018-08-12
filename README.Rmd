@@ -8,8 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  cache = TRUE
+  fig.path = "man/figures/README-"
 )
 drop_hl <- function(x, n = 1) {
   x <- tibble::as_tibble(x, validate = FALSE)
@@ -132,10 +131,9 @@ rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 identical(unique(rt2), funique(rt2))
 
 ## plot
-plot(drop_hl(m, n = 4)) + 
+plot(drop_hl(mb, n = 4)) + 
   ggplot2::ggsave("man/figures/r2.png", width = 8, height = 4.5, units = "in")
 ```
 
 <p align="center"> <img src="man/figures/r2.png">
-
 
