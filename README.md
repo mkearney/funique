@@ -3,9 +3,11 @@
 
 # funique <img src="man/figures/logo.png" width="160px" align="right" />
 
+[![Travis build
+status](https://travis-ci.org/mkearney/funique.svg?branch=master)](https://travis-ci.org/mkearney/funique)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-⌚️ A faster `unique()` function
+> ⌚️ A faster `unique()` function
 
 ## Installation
 
@@ -54,7 +56,7 @@ identical(unique(d), funique(d))
   times = 200, unit = "relative"))
 #> Unit: relative
 #>        expr     min      lq    mean  median      uq     max neval
-#>   unique(d) 5.08136 5.01858 5.00787 5.27844 5.32153 6.59946   200
+#>   unique(d) 4.98663 4.92073 4.94704 5.14552 5.38573 2.02836   200
 #>  funique(d) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   200
 
 ## plot
@@ -79,9 +81,9 @@ rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 (mb <- microbenchmark::microbenchmark(
   unique(rt2), funique(rt2), unit = "relative"))
 #> Unit: relative
-#>          expr     min      lq    mean  median      uq     max neval
-#>   unique(rt2) 1.66789 1.59619 1.67668 1.63215 1.75449 1.19259   100
-#>  funique(rt2) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
+#>          expr     min      lq    mean median      uq      max neval
+#>   unique(rt2) 1.56861 1.57622 1.35692 1.5524 1.35336 0.393617   100
+#>  funique(rt2) 1.00000 1.00000 1.00000 1.0000 1.00000 1.000000   100
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))

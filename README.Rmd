@@ -8,7 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-"
+  fig.path = "man/figures/README-",
+  cache = TRUE
 )
 drop_hl <- function(x, n = 1) {
   x <- tibble::as_tibble(x, validate = FALSE)
@@ -58,9 +59,10 @@ library(funique)
 ```
 # funique <img src="man/figures/logo.png" width="160px" align="right" />
 
+[![Travis build status](https://travis-ci.org/mkearney/funique.svg?branch=master)](https://travis-ci.org/mkearney/funique)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-⌚️ A faster `unique()` function
+> ⌚️ A faster `unique()` function
 
 ## Installation
 
