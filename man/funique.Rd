@@ -2,7 +2,7 @@
 % Please edit documentation in R/funique.R
 \name{funique}
 \alias{funique}
-\title{A faster unique() function}
+\title{A faster unique function}
 \usage{
 funique(x)
 }
@@ -11,11 +11,11 @@ funique(x)
 simply passed to \code{\link[base]{unique}}}
 }
 \value{
-The unique values of x.
+The unique rows/values of x.
 }
 \description{
 Similar to \code{\link[base]{unique}}, only optimized for working with
-date-time and some list columns.
+date-time columns.
 }
 \examples{
 
@@ -30,7 +30,7 @@ d <- data.frame(
 dd <- d[c(1:1000, sample(1:1000, 500, replace = TRUE)), ]
 
 ## get only unique rows
-funique(dd)
+head(funique(dd))
 
 ## check output
 identical(unique(dd), funique(dd))

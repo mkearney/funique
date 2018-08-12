@@ -1,13 +1,13 @@
 
 
-#' A faster unique() function
+#' A faster unique function
 #'
 #' Similar to \code{\link[base]{unique}}, only optimized for working with
-#' date-time and some list columns.
+#' date-time columns.
 #'
 #' @param x Input data. If x is not a data frame or date-time object, then it is
-#' simply passed to \code{\link[base]{unique}}
-#' @return The unique values of x.
+#'   simply passed to \code{\link[base]{unique}}
+#' @return The unique rows/values of x.
 #' @examples
 #'
 #' ## create example data set
@@ -21,7 +21,7 @@
 #' dd <- d[c(1:1000, sample(1:1000, 500, replace = TRUE)), ]
 #'
 #' ## get only unique rows
-#' funique(dd)
+#' head(funique(dd))
 #'
 #' ## check output
 #' identical(unique(dd), funique(dd))
