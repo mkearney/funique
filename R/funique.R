@@ -10,21 +10,21 @@
 #' @return The unique values of x.
 #' @examples
 #'
-#' ## create data set with date-time columns
-#' d <- datasets::mtcars
-#' d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
+#' ## create example data set
+#' d <- data.frame(
+#'   x = rnorm(1000),
+#'   y = seq.POSIXt(as.POSIXct("2018-01-01"),
+#'     as.POSIXct("2018-12-31"), length.out = 10)
+#' )
 #'
-#' ## create multiple data frames with duplicate rows
-#' d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
-#'
-#' ## merge into single data frame
-#' d <- do.call("rbind", d)
+#' ## sample to create version with duplicates
+#' dd <- d[c(1:1000, sample(1:1000, 500, replace = TRUE)), ]
 #'
 #' ## get only unique rows
-#' funique(d)
+#' funique(dd)
 #'
 #' ## check output
-#' identical(unique(d), funique(d))
+#' identical(unique(dd), funique(dd))
 #'
 #' @export
 funique <- function(x) UseMethod("funique")
@@ -42,11 +42,6 @@ funique.data.frame <- function(x) {
   x
 }
 
-fduplicated <- function(x) {
-  if (length(x) != 1L)
-    duplicated(do.call(Map, c(list, x)), fromLast = FALSE)
-  else duplicated(x[[1L]], fromLast = FALSE)
-}
 
 
 #' @export
@@ -57,5 +52,12 @@ funique.default <- function(x) {
 
 #' @export
 funique.POSIXt <- function(x) {
-  x[!duplicated(as.integer(x))]
+  x[!fduplicated(as.integer(x))]
+}
+
+
+fduplicated <- function(x) {
+  if (length(x) != 1L)
+    duplicated(do.call(Map, c(list, x)), fromLast = FALSE)
+  else duplicated(x[[1L]], fromLast = FALSE)
 }
