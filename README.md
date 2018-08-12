@@ -12,8 +12,13 @@
 You can install the released version of funique from Github with:
 
 ``` r
-## install from github
-devtools::install_github("mkearney/funique")
+## install remotes pkg if not already
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+
+## install funique from github
+remotes::install_github("mkearney/funique")
 ```
 
 ## Usage
@@ -27,26 +32,34 @@ The code below creates a data frame with several duplicate rows and then
 compares performance (in time) of `funique()` versus `base::unique()`.
 
 ``` r
-## create data set with a date-time column
-d <- datasets::mtcars
-d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
+## set seed
+set.seed(20180812)
 
-## create multiple data frames with duplicate rows
-d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
-## merge into single data frame
-d <- do.call("rbind", d)
+## generate data
+d <- data.frame(
+  x = rnorm(1000),
+  y = seq.POSIXt(as.POSIXct("2018-01-01"),
+    as.POSIXct("2018-12-31"), length.out = 10))
 
-## compare times between funique() and base::unique()
-library(microbenchmark)
+## create data frame with duplicate rows
+d <- d[c(1:1000, sample(1:1000, 500, replace = TRUE)), ]
+row.names(d) <- NULL
 
-## benchmarks
-(mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
-
-## make sure the output is the same
+## check the output against base::unique
 identical(unique(d), funique(d))
+#> [1] TRUE
+
+## bench mark
+(m <- microbenchmark::microbenchmark(unique(d), funique(d), 
+  times = 200, unit = "relative"))
+#> Unit: relative
+#>        expr     min      lq    mean  median      uq     max neval
+#>   unique(d) 5.08136 5.01858 5.00787 5.27844 5.32153 6.59946   200
+#>  funique(d) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   200
 
 ## plot
-plot(mb)
+plot(drop_hl(m, n = 4)) + 
+  ggplot2::ggsave("man/figures/r1.png", width = 8, height = 4.5, units = "in")
 ```
 
 <p align="center">
@@ -63,13 +76,20 @@ rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
-(mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
+(mb <- microbenchmark::microbenchmark(
+  unique(rt2), funique(rt2), unit = "relative"))
+#> Unit: relative
+#>          expr     min      lq    mean  median      uq     max neval
+#>   unique(rt2) 1.66789 1.59619 1.67668 1.63215 1.75449 1.19259   100
+#>  funique(rt2) 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000   100
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))
+#> [1] TRUE
 
 ## plot
-plot(mb)
+plot(drop_hl(m, n = 4)) + 
+  ggplot2::ggsave("man/figures/r2.png", width = 8, height = 4.5, units = "in")
 ```
 
 <p align="center">

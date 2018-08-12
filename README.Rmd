@@ -51,7 +51,8 @@ plot.hlmb <- function(x) {
       subtitle = "Boxplots overlayed with jittered replication times",
       caption = "Estimates from the {microbenchmark} pkg") +
     ggplot2::scale_y_continuous(limits = c(min, max)) +
-    ggplot2::coord_flip()
+    ggplot2::coord_flip() + 
+    ggplot2::scale_fill_manual(values = c("greenyellow", "gray"))
 }
 library(funique)
 ```
@@ -66,8 +67,13 @@ library(funique)
 You can install the released version of funique from Github with:
 
 ```{r, eval = FALSE}
-## install from github
-devtools::install_github("mkearney/funique")
+## install remotes pkg if not already
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+
+## install funique from github
+remotes::install_github("mkearney/funique")
 ```
 
 ## Usage
@@ -78,59 +84,38 @@ There's one function `funique()`, which is the same as `base::unique()` only opt
 
 The code below creates a data frame with several duplicate rows and then compares performance (in time) of `funique()` versus `base::unique()`.
 
-```{r ex1, eval=FALSE}
-## create data set with a date-time column
-d <- datasets::mtcars
-d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
 
-## create multiple data frames with duplicate rows
-d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
-## merge into single data frame
-d <- do.call("rbind", d)
+```{r ex1, fig.keep = "none"}
+## set seed
+set.seed(20180812)
 
-## compare times between funique() and base::unique()
-library(microbenchmark)
+## generate data
+d <- data.frame(
+  x = rnorm(1000),
+  y = seq.POSIXt(as.POSIXct("2018-01-01"),
+    as.POSIXct("2018-12-31"), length.out = 10))
 
-## benchmarks
-(mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
+## create data frame with duplicate rows
+d <- d[c(1:1000, sample(1:1000, 500, replace = TRUE)), ]
+row.names(d) <- NULL
 
-## make sure the output is the same
+## check the output against base::unique
 identical(unique(d), funique(d))
 
-## plot
-plot(mb)
-```
-
-```{r, include=FALSE}
-## create data set with a date-time column
-d <- datasets::mtcars
-d$dttm <- Sys.time() + runif(nrow(d), -1000, 1000)
-
-## create multiple data frames with duplicate rows
-d <- lapply(1:50, function(.) rbind(d, d[sample(seq_len(nrow(d)), 20), ]))
-## merge into single data frame
-d <- do.call("rbind", d)
-
-## compare times between funique() and base::unique()
-library(microbenchmark)
-
-## benchmarks
-(mb <- microbenchmark(unique(d), funique(d), unit = "relative"))
-
-## make sure the output is the same
-identical(unique(d), funique(d))
+## bench mark
+(m <- microbenchmark::microbenchmark(unique(d), funique(d), 
+  times = 200, unit = "relative"))
 
 ## plot
-plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray")) + 
-  ggplot2::ggsave("man/figures/r1.png", width = 8, height = 6, units = "in")
+plot(drop_hl(m, n = 4)) + 
+  ggplot2::ggsave("man/figures/r1.png", width = 8, height = 4.5, units = "in")
 ```
 
 <p align="center"> <img src="man/figures/r1.png">
 
 Here's another test this time using duplicate-infested Twitter data.
 
-```{r ex2, eval = FALSE}
+```{r ex2, fig.keep = "none"}
 ## search for data on 100 tweets
 rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 
@@ -138,36 +123,17 @@ rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
 rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
 
 ## benchmarks
-(mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
+(mb <- microbenchmark::microbenchmark(
+  unique(rt2), funique(rt2), unit = "relative"))
 
 ## make sure the output is the same
 identical(unique(rt2), funique(rt2))
 
 ## plot
-plot(mb)
-```
-
-
-```{r, include=FALSE}
-## search for data on 100 tweets
-rt <- rtweet::search_tweets("lang:en", verbose = FALSE)
-
-## create duplicates
-rt2 <- rt[sample(1:nrow(rt), 1000, replace = TRUE), ]
-
-## benchmarks
-(mb <- microbenchmark(unique(rt2), funique(rt2), unit = "relative"))
-
-## make sure the output is the same
-identical(unique(rt2), funique(rt2))
-
-## plot
-plot(mb)
-
-## plot
-plot(drop_hl(mb, n = 4)) + 
-  ggplot2::scale_fill_manual(values = c("greenyellow", "gray")) + 
-  ggplot2::ggsave("man/figures/r2.png", width = 8, height = 6, units = "in")
+plot(drop_hl(m, n = 4)) + 
+  ggplot2::ggsave("man/figures/r2.png", width = 8, height = 4.5, units = "in")
 ```
 
 <p align="center"> <img src="man/figures/r2.png">
+
+
