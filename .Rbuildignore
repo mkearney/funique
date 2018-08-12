@@ -1,3 +1,6 @@
+^docs$
+^_pkgdown\.yml$
+^README_cache$
 ^\.travis\.yml$
 ^README\.Rmd$
 ^.*\.Rproj$
