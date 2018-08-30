@@ -1,6 +1,6 @@
-pandoc: 2.2.2.1
+pandoc: 2.2.3.2
 pkgdown: 1.1.0.9000
-pkgdown_sha: ~
+pkgdown_sha: ad5a58780c6551af53561df51b58bc874ca8ccd8
 articles: []
 urls:
   reference: https://funique.mikewk.com//reference

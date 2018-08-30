@@ -118,7 +118,7 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">identical</span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d))</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">## bench mark</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">(m &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d), </a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">(m &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(<span class="kw">unique</span>(d), <span class="kw"><a href="reference/funique.html">funique</a></span>(d), </a>
 <a class="sourceLine" id="cb2-19" data-line-number="19">  <span class="dt">times =</span> <span class="dv">200</span>, <span class="dt">unit =</span> <span class="st">"relative"</span>))</a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">## plot</span></a>
@@ -135,7 +135,7 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5">rt2 &lt;-<span class="st"> </span>rt[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(rt), <span class="dv">1000</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>), ]</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">## benchmarks</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">(mb &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/microbenchmark/topics/microbenchmark">microbenchmark</a></span>(</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">(mb &lt;-<span class="st"> </span>microbenchmark<span class="op">::</span><span class="kw">microbenchmark</span>(</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">unique</span>(rt2), <span class="kw"><a href="reference/funique.html">funique</a></span>(rt2), <span class="dt">unit =</span> <span class="st">"relative"</span>))</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## make sure the output is the same</span></a>
